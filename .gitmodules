@@ -1,0 +1,4 @@
+[submodule "ringsteki-json-data"]
+	path = ringsteki-json-data
+	url = git@github.com:ringsteki/ringsteki-json-data.git
+	branch = master
