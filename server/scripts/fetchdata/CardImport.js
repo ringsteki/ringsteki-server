@@ -40,15 +40,21 @@ class CardImport {
 
         let i = 0;
 
+        // console.log(cards.filter(card => card.Title === "Mugash"));
+
         for(let card of cards) {
-            let imagePath = path.join(this.imageDir, card.code + '.png');
+            // console.log(`card # ${++i}`);
+            let imagePath = path.join(this.imageDir, card.Title + '-' + card.packName + '-' + card.Number + '.png');
 
             if(!fs.existsSync(imagePath)) {
-                setTimeout(() => {
-                    this.imageSource.fetchImage(card, imagePath);
-                }, i++ * 200);
+                // console.log(`need to download ${imagePath}`)
+                
+                this.imageSource.fetchImage(card, imagePath);
+                
             }
         }
+
+        console.log(alreadySearched.length);
     }
 
     async importPacks() {

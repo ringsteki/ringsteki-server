@@ -4,15 +4,15 @@ const monk = require('monk');
 const path = require('path');
 
 const CardImport = require('./fetchdata/CardImport.js');
-const CardgameDbImageSource = require('./fetchdata/CardgameDbImageSource.js');
+const DefaultWebImageSource = require('./fetchdata/DefaultWebImageSource.js');
 const JsonCardSource = require('./fetchdata/JsonCardSource.js');
 const NoImageSource = require('./fetchdata/NoImageSource.js');
 
 const optionsDefinition = [
     { name: 'card-source', type: String, defaultValue: 'json' },
-    { name: 'card-dir', type: String, defaultValue: path.join(__dirname, '..', '..', 'throneteki-json-data') },
-    { name: 'image-source', type: String, defaultValue: 'cardgamedb' },
-    { name: 'image-dir', type: String, defaultValue: path.join(__dirname, '..', '..', 'public', 'img', 'cards') },
+    { name: 'card-dir', type: String, defaultValue: path.join(__dirname, '..', '..', 'ringsteki-json-data') },
+    { name: 'image-source', type: String, defaultValue: 'default' },
+    { name: 'image-dir', type: String, defaultValue: path.join(__dirname, '..', 'public', 'img', 'cards') },
     { name: 'no-images', type: Boolean, defaultValue: false }
 ];
 
@@ -33,8 +33,8 @@ function createImageSource(options) {
     switch(options['image-source']) {
         case 'none':
             return new NoImageSource();
-        case 'cardgamedb':
-            return new CardgameDbImageSource();
+        case 'default':
+            return new DefaultWebImageSource();
     }
 
     throw new Error(`Unknown image source '${options['image-source']}'`);
@@ -42,7 +42,7 @@ function createImageSource(options) {
 
 let options = commandLineArgs(optionsDefinition);
 
-let db = monk('mongodb://127.0.0.1:27017/throneteki');
+let db = monk('mongodb://mongo:27017/ringsteki');
 let dataSource = createDataSource(options);
 let imageSource = createImageSource(options);
 let cardImport = new CardImport(db, dataSource, imageSource, options['image-dir']);
