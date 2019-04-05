@@ -4,6 +4,7 @@
   "description": "A Game of Throne Second Edition Card Game Server",
   "main": "index.js",
   "scripts": {
+    "fetchdata": "node server/scripts/fetchdata.js",
     "test": "npm run jasmine",
     "jasmine": "cross-env JASMINE_CONFIG_PATH=./jasmine.json jasmine",
     "cover": "cross-env JASMINE_CONFIG_PATH=./jasmine.json istanbul cover --include-all-sources jasmine",

@@ -28,18 +28,36 @@ class CardgameDbImageSource {
 
         const writer = fs.createWriteStream(imagePath)
 
-        const response = await axios({
-            url,
-            method: 'GET',
-            responseType: 'stream'
-          });
+        try {
+            const response = await axios({
+                url,
+                method: 'GET',
+                responseType: 'stream'
+            });
+            response.data.pipe(writer);
+        } catch (ex) {
+            console.log(`Error trying to open image ${url}: ${ex.toString ? ex.toString() : ex}`);
+            // Delete the file
+            writer.end();
+            fs.unlink(imagePath, (err) => {
+                if (err) throw err;
+                console.log(`${imagePath} was deleted`);
+              });
+            return Promise.resolve();
+        }
 
-          response.data.pipe(writer);
-
-          return new Promise((resolve, reject) => {
-            writer.on('finish', resolve)
-            writer.on('error', reject)
-          });
+        return new Promise((resolve, reject) => {
+            writer.on('finish', () => {
+                console.log(`Saved image ${imagePath}`);
+                resolve();
+            })
+            writer.on('error', (err) => {
+                console.log(`Error trying to save file ${imagePath} from stream: ${err.toString ? err.toString() : err}`);
+                // Delete the file
+                fs.unlink(imagePath);
+                resolve();
+            });
+        });
 
         // request({ url: url, encoding: null }, function(err, response, body) {
         //     if(err) {

@@ -35,7 +35,7 @@ class CardImport {
         await this.fetchImages(cards);
     }
 
-    fetchImages(cards) {
+    async fetchImages(cards) {
         mkdirp(this.imageDir);
 
         let i = 0;
@@ -49,12 +49,10 @@ class CardImport {
             if(!fs.existsSync(imagePath)) {
                 // console.log(`need to download ${imagePath}`)
                 
-                this.imageSource.fetchImage(card, imagePath);
+                await this.imageSource.fetchImage(card, imagePath);
                 
             }
         }
-
-        console.log(alreadySearched.length);
     }
 
     async importPacks() {
