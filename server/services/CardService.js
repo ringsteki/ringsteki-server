@@ -25,7 +25,7 @@ class CardService {
                 let cards = {};
 
                 for(let card of result) {
-                    cards[card.code] = card;
+                    cards[card.Title] = card;
                 }
 
                 return cards;
@@ -50,16 +50,9 @@ class CardService {
         });
     }
 
-    getRestrictedList() {
-        return new Promise((resolve, reject) => {
-            fs.readFile(path.join(__dirname, '../../throneteki-json-data/restricted-list.json'), (err, data) => {
-                if(err) {
-                    return reject(err);
-                }
-
-                resolve(JSON.parse(data));
-            });
-        });
+    async getRestrictedList() {
+        console.warn('called getRestrictedList, but this doesn\'t return any data for this project');
+        return Promise.resolve([]);
     }
 }
 

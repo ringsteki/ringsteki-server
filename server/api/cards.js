@@ -32,6 +32,6 @@ module.exports.init = function(server) {
     });
 
     server.get('/api/restricted-list', function(req, res, next) {
-        res.send('OK');
+        res.send({success: true, restrictedList: []});
     });
 };

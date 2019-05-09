@@ -37,7 +37,7 @@ function hashPassword(password, rounds) {
 function sendEmail(address, subject, email) {
     const message = {
         to: address,
-        from: 'The Iron Throne <noreply@theironthrone.net>',
+        from: 'Ringsteki <noreply@ringsteki.net>',
         subject: subject,
         text: email
     };
@@ -99,7 +99,7 @@ function writeFile(path, data, opts = 'utf8') {
     });
 }
 
-const DefaultEmailHash = crypto.createHash('md5').update('noreply@theironthrone.net').digest('hex');
+const DefaultEmailHash = crypto.createHash('md5').update('noreply@ringsteki.net').digest('hex');
 
 module.exports.init = function (server) {
     server.post('/api/account/register', wrapAsync(async (req, res, next) => {
@@ -177,13 +177,13 @@ module.exports.init = function (server) {
         };
 
         user = await userService.addUser(newUser);
-        let url = `https://theironthrone.net/activation?id=${user._id}&token=${activationToken}`;
-        let emailText = `Hi,\n\nSomeone, hopefully you, has requested an account to be created on The Iron Throne (https://theironthrone.net).  If this was you, click this link ${url} to complete the process.\n\n` +
+        let url = `https://ringsteki.net/activation?id=${user._id}&token=${activationToken}`;
+        let emailText = `Hi,\n\nSomeone, hopefully you, has requested an account to be created on Ringsteki (https://ringsteki.net).  If this was you, click this link ${url} to complete the process.\n\n` +
             'If you did not request this please disregard this email.\n' +
             'Kind regards,\n\n' +
-            'The Iron Throne team';
+            'The Ringsteki team';
 
-        await sendEmail(user.email, 'The Iron Throne - Account activation', emailText);
+        await sendEmail(user.email, 'Ringsteki - Account activation', emailText);
 
         res.send({ success: true });
 
@@ -453,13 +453,13 @@ module.exports.init = function (server) {
         resetToken = hmac.update(`RESET ${user.username} ${formattedExpiration}`).digest('hex');
 
         await userService.setResetToken(user, resetToken, formattedExpiration);
-        let url = `https://theironthrone.net/reset-password?id=${user._id}&token=${resetToken}`;
+        let url = `https://ringsteki.net/reset-password?id=${user._id}&token=${resetToken}`;
         let emailText = 'Hi,\n\nSomeone, hopefully you, has requested their password on The Iron Throne (https://theironthrone.net) to be reset.  If this was you, click this link ' + url + ' to complete the process.\n\n' +
             'If you did not request this reset, do not worry, your account has not been affected and your password has not been changed, just ignore this email.\n' +
             'Kind regards,\n\n' +
-            'The Iron Throne team';
+            'The Ringsteki team';
 
-        await sendEmail(user.email, 'The Iron Throne - Password reset', emailText);
+        await sendEmail(user.email, 'Ringsteki - Password reset', emailText);
     }));
 
     server.put('/api/account/:username', passport.authenticate('jwt', { session: false }), wrapAsync(async (req, res) => {
@@ -640,7 +640,7 @@ module.exports.init = function (server) {
 async function downloadAvatar(user) {
     let emailHash = user.enableGravatar ? crypto.createHash('md5').update(user.email).digest('hex') : DefaultEmailHash;
     let avatar = await util.httpRequest(`https://www.gravatar.com/avatar/${emailHash}?d=identicon&s=24`, { encoding: null });
-    await writeFile(`public/img/avatar/${user.username}.png`, avatar, 'binary');
+    await writeFile(`server/public/img/avatar/${user.username}.png`, avatar, 'binary');
 }
 
 async function checkAuth(req, res) {
