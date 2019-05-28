@@ -38,19 +38,12 @@ class CardImport {
     async fetchImages(cards) {
         mkdirp(this.imageDir);
 
-        let i = 0;
-
-        // console.log(cards.filter(card => card.Title === "Mugash"));
-
         for(let card of cards) {
             // console.log(`card # ${++i}`);
             let imagePath = path.join(this.imageDir, card.Title + '-' + card.packName + '-' + card.Number + '.png');
 
             if(!fs.existsSync(imagePath)) {
-                // console.log(`need to download ${imagePath}`)
-                
                 await this.imageSource.fetchImage(card, imagePath);
-                
             }
         }
     }

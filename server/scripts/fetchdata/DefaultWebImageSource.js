@@ -1,14 +1,8 @@
 /*eslint no-console:0 */
 const fs = require('fs');
-const jimp = require('jimp');
-const request = require('request');
 const axios = require('axios');
 
 class CardgameDbImageSource {
-    constructor() {
-        // this.packs = this.loadPacks();
-    }
-
     loadPacks() {
         let files = fs.readdirSync('ringsteki-json-data/packs');
         return files.map(file => JSON.parse(fs.readFileSync('ringsteki-json-data/packs/' + file)));
@@ -19,14 +13,14 @@ class CardgameDbImageSource {
      * @param {string} imagePath 
      */
     async fetchImage(card, imagePath) {
-        if (!card.Front || !card.Front.ImagePath) {
+        if(!card.Front || !card.Front.ImagePath) {
             console.log(`Card ${card.Title} did not have a Front.ImagePath`);
             return;
         }
 
         let url = encodeURI(card.Front.ImagePath);
 
-        const writer = fs.createWriteStream(imagePath)
+        const writer = fs.createWriteStream(imagePath);
 
         try {
             const response = await axios({
@@ -35,22 +29,23 @@ class CardgameDbImageSource {
                 responseType: 'stream'
             });
             response.data.pipe(writer);
-        } catch (ex) {
+        } catch(ex) {
             console.log(`Error trying to open image ${url}: ${ex.toString ? ex.toString() : ex}`);
             // Delete the file
             writer.end();
             fs.unlink(imagePath, (err) => {
-                if (err) throw err;
+                // eslint-disable-next-line curly
+                if(err) throw err;
                 console.log(`${imagePath} was deleted`);
-              });
+            });
             return Promise.resolve();
         }
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             writer.on('finish', () => {
                 console.log(`Saved image ${imagePath}`);
                 resolve();
-            })
+            });
             writer.on('error', (err) => {
                 console.log(`Error trying to save file ${imagePath} from stream: ${err.toString ? err.toString() : err}`);
                 // Delete the file

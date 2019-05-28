@@ -1,7 +1,7 @@
 {
-  "name": "throneteki",
-  "version": "1.0.2",
-  "description": "A Game of Throne Second Edition Card Game Server",
+  "name": "ringsteki-server",
+  "version": "1.0.0",
+  "description": "LOTR LCG Card Game Server",
   "main": "index.js",
   "scripts": {
     "fetchdata": "node server/scripts/fetchdata.js",
@@ -9,7 +9,7 @@
     "jasmine": "cross-env JASMINE_CONFIG_PATH=./jasmine.json jasmine",
     "cover": "cross-env JASMINE_CONFIG_PATH=./jasmine.json istanbul cover --include-all-sources jasmine",
     "lint": "eslint server/ test/server/ --ext=js",
-    "server": "node .",
+    "server": "NODE_ENV=production PORT=4000 node .",
     "server:dev": "node --inspect=0.0.0.0:9229 .",
     "gamenode": "node server/gamenode",
     "gamenode:dev": "node --inspect=0.0.0.0:9230 server/gamenode",
@@ -17,21 +17,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cryogen/throneteki.git"
+    "url": "git+https://github.com/ringsteki/ringsteki-server.git"
   },
   "keywords": [
-    "got",
-    "game",
-    "of",
-    "thrones",
-    "cardgame"
+    "ringsteki",
+    "LOTR",
+    "LOTRLCG",
+    "LCG"
   ],
-  "author": "Stuart Walsh <stu@ipng.org.uk>",
+  "author": "Eric Lloyd <erlloyd@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cryogen/throneteki/issues"
+    "url": "https://github.com/ringsteki/ringsteki-server/issues"
   },
-  "homepage": "https://github.com/cryogen/throneteki#readme",
+  "homepage": "https://github.com/ringsteki/ringsteki-server#readme",
   "dependencies": {
     "@sendgrid/mail": "^6.2.0",
     "axios": "^0.18.0",

@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
 const logger = require('../log.js');
 
 class CardService {
@@ -51,6 +48,7 @@ class CardService {
     }
 
     async getRestrictedList() {
+        // eslint-disable-next-line no-console
         console.warn('called getRestrictedList, but this doesn\'t return any data for this project');
         return Promise.resolve([]);
     }

@@ -31,7 +31,7 @@ module.exports.init = function(server) {
         res.send({ success: true, factions: Factions });
     });
 
-    server.get('/api/restricted-list', function(req, res, next) {
+    server.get('/api/restricted-list', function(req, res) {
         res.send({success: true, restrictedList: []});
     });
 };

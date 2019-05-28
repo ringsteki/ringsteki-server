@@ -1,13 +1,12 @@
 /*eslint no-console:0 */
 const fs = require('fs');
 const path = require('path');
-const _ = require('underscore');
 
 class JsonCardSource {
     constructor(directory) {
         console.log('Loading pack files...');
         let data = this.loadPackFiles(directory);
-        console.log('\tdone.')
+        console.log('\tdone.');
         this.packs = data.packs;
         this.cards = data.cards;
     }

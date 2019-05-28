@@ -31,12 +31,14 @@ class ZmqSocket extends EventEmitter {
     }
 
     onConnect() {
-        console.log('onConnect called')
+        // eslint-disable-next-line no-console
+        console.log('onConnect called');
         this.emit('onGameSync', this.onGameSync.bind(this));
     }
 
     onGameSync(games) {
-        console.log('sending HELLO')
+        // eslint-disable-next-line no-console
+        console.log('sending HELLO');
         this.send('HELLO', {
             maxGames: config.maxGames,
             version: this.version,
