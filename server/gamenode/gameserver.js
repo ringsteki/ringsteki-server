@@ -49,7 +49,7 @@ class GameServer {
             server = https.createServer({ key: privateKey, cert: certificate });
         }
 
-        server.listen(process.env.PORT || config.socketioPort);
+        server.listen(process.env.SOCKET_IO_PORT || config.socketioPort);
 
         var options = {
             perMessageDeflate: false
