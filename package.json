@@ -9,7 +9,7 @@
     "jasmine": "cross-env JASMINE_CONFIG_PATH=./jasmine.json jasmine",
     "cover": "cross-env JASMINE_CONFIG_PATH=./jasmine.json istanbul cover --include-all-sources jasmine",
     "lint": "eslint server/ test/server/ --ext=js",
-    "server": "NODE_ENV=production PORT=4000 node .",
+    "server": "NODE_ENV=production node .",
     "server:dev": "node --inspect=0.0.0.0:9229 .",
     "gamenode": "node server/gamenode",
     "gamenode:dev": "node --inspect=0.0.0.0:9230 server/gamenode",
