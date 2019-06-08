@@ -1,4 +1,4 @@
-{ 
+{
   "name": "ringsteki-server",
   "version": "1.0.0",
   "description": "LOTR LCG Card Game Server",
@@ -11,6 +11,7 @@
     "lint": "eslint server/ test/server/ --ext=js",
     "server": "NODE_ENV=production node .",
     "server:dev": "node --inspect=0.0.0.0:9229 .",
+    "server:dev:wait": "node --inspect-brk=0.0.0.0:9229 .",
     "gamenode": "node server/gamenode",
     "gamenode:dev": "node --inspect=0.0.0.0:9230 server/gamenode",
     "gamenode:dev:wait": "node --inspect-brk=0.0.0.0:9230 server/gamenode"
