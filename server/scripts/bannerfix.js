@@ -2,7 +2,7 @@
 const monk = require('monk');
 const _ = require('underscore');
 
-let db = monk('mongodb://127.0.0.1:27017/throneteki');
+let db = monk('process.env.RINGSTEKI_DBPATH || mongodb://127.0.0.1:27017/throneteki');
 
 let dbDecks = db.get('decks');
 

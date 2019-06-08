@@ -9,7 +9,7 @@ const DeckService = require('../services/DeckService');
 
 class ImportStandaloneDecks {
     constructor() {
-        this.db = monk('mongodb://127.0.0.1:27017/throneteki');
+        this.db = monk(process.env.RINGSTEKI_DBPATH || 'mongodb://127.0.0.1:27017/ringsteki');
         this.cardService = new CardService(this.db);
         this.deckService = new DeckService(this.db);
     }

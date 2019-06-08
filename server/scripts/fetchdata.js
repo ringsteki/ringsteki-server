@@ -13,7 +13,7 @@ const optionsDefinition = [
     { name: 'card-dir', type: String, defaultValue: path.join(__dirname, '..', '..', 'ringsteki-json-data') },
     { name: 'image-source', type: String, defaultValue: 'default' },
     { name: 'image-dir', type: String, defaultValue: path.join(__dirname, '..', 'public', 'img', 'cards') },
-    { name: 'no-images', type: Boolean, defaultValue: false }
+    { name: 'no-images', type: Boolean, defaultValue: true }
 ];
 
 function createDataSource(options) {
@@ -42,7 +42,7 @@ function createImageSource(options) {
 
 let options = commandLineArgs(optionsDefinition);
 
-let db = monk('mongodb://mongo:27017/ringsteki');
+let db = monk(process.env.RINGSTEKI_DBPATH || 'mongodb://mongo:27017/ringsteki');
 let dataSource = createDataSource(options);
 let imageSource = createImageSource(options);
 let cardImport = new CardImport(db, dataSource, imageSource, options['image-dir']);
